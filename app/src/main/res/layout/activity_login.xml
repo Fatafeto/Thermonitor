@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginIn"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+    <Space
+        android:id="@+id/space"
+        android:layout_width="wrap_content"
+        android:layout_height="0.75in" />
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/space"
+        android:layout_marginTop="25dp"
+        android:bufferType="editable"
+        android:ems="10"
+        android:textSize="0.15in"
+        android:inputType="textEmailAddress"
+        android:singleLine="true"
+        android:textColor="@color/colorAccent"
+        android:text="E-mail" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/email"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:textSize="0.15in"
+        android:textColor="@color/colorAccent"
+        android:text="Password" />
+
+
+    <Space
+        android:id="@+id/space2"
+        android:layout_width="wrap_content"
+        android:layout_height="0.25in"
+        android:layout_below="@id/password"/>
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/space2"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="0dp"
+        android:background="@color/colorPrimary"
+        android:textSize="0.1in"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="Login"
+        android:visibility="visible" />
+</RelativeLayout>
