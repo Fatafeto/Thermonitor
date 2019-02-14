@@ -17,6 +17,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -24,7 +29,12 @@ public class LoginActivity extends AppCompatActivity {
     Button button2;
     EditText inputMail;
     EditText inputPassword;
+    EditText inputUsername;
     FirebaseAuth firebaseAuth;
+    FirebaseDatabase firebaseDatabase;
+
+    String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +44,14 @@ public class LoginActivity extends AppCompatActivity {
         button2 = (Button) findViewById(R.id.button2);
         inputMail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
+        inputUsername = (EditText) findViewById(R.id.username);
         addListenerOnButton();
+
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
 
     }
 
@@ -64,9 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-
-                    Toast.makeText(LoginActivity.this , "Signing in ..." , Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(LoginActivity.this , "Signing in ..." , Toast.LENGTH_SHORT).show();
                 firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -74,9 +87,13 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this , task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
                         if(task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext() , "Successfully signed in" , Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(context, ListActivity.class);
                             startActivity(intent);
                             finish();
+
+
+
                         }
 
 

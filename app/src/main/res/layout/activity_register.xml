@@ -19,10 +19,27 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/username"
         android:layout_width="320dp"
         android:layout_height="50dp"
         android:layout_below="@id/signup"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@color/colorTextBackground"
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="textEmailAddress"
+        android:paddingStart="15dp"
+        android:singleLine="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="0.15in" />
+
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/username"
         android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
         android:background="@color/colorTextBackground"
@@ -50,11 +67,27 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="0.15in" />
 
+    <EditText
+        android:id="@+id/confpassword"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@color/colorTextBackground"
+        android:ems="10"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:paddingStart="15dp"
+        android:singleLine="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="0.15in" />
+
     <Button
         android:id="@+id/button"
         android:layout_width="320dp"
         android:layout_height="45dp"
-        android:layout_below="@id/password"
+        android:layout_below="@id/confpassword"
         android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
         android:background="@color/colorButton1"
