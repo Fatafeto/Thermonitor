@@ -91,6 +91,10 @@ public class DeviceListActivity extends AppCompatActivity {
         }
     }
 
+    public void onBackPressed() {
+        finishAffinity();
+    }
+
     public void addListenerOnButton() {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,7 +183,7 @@ public class DeviceListActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view  = getLayoutInflater().inflate(R.layout.image_list , null);   //lessa hytzbt
+            View view  = getLayoutInflater().inflate(R.layout.image_list , null);
             ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
             TextView textView = (TextView) view.findViewById(R.id.textView);
             imageView.setImageResource(images.get(position));
@@ -209,7 +213,7 @@ public class DeviceListActivity extends AppCompatActivity {
     }
     public void scanWiFi () {
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        registerReceiver(wifiReceiver , new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));   //not understood
+        registerReceiver(wifiReceiver , new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
         wifiManager.startScan();
         Toast.makeText(getApplicationContext(), "Scanning for nearby devices.", Toast.LENGTH_SHORT).show();
     }
@@ -227,10 +231,12 @@ public class DeviceListActivity extends AppCompatActivity {
                         availableSSID.add(scanResult.SSID);  //added all networks ssid
                     }
 
-                    for (int i = availableSSID.size() - 1; i >= 0; i--) {
+                    for (int i = 0; i<availableSSID.size(); i++) {
                         if (availableSSID.get(i).contains("ESP")) {
-                            listElements.add(availableSSID.get(i));
-                            images.add(R.drawable.esp);
+                            if(!(listElements.contains(availableSSID.get(i))))  {
+                                listElements.add(availableSSID.get(i));
+                                images.add(R.drawable.esp);
+                            }
                         }
                     }
 

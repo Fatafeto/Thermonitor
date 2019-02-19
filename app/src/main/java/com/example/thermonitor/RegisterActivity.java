@@ -30,19 +30,21 @@ public class RegisterActivity extends AppCompatActivity {
     EditText inputPassword;
     EditText inputConfirmPassword;
     EditText inputUsername;
-    ProgressDialog progressDialog;
     FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         button = (Button) findViewById(R.id.button);
         inputMail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         inputConfirmPassword = (EditText) findViewById(R.id.confpassword);
         inputUsername = (EditText) findViewById(R.id.username);
+
         addListenerOnButton();
+
         firebaseAuth = FirebaseAuth.getInstance();
     }
 
@@ -85,30 +87,24 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
 
-                progressDialog.setMessage("Creating account ...");
-                progressDialog.show();
+                Toast.makeText(getApplicationContext() , "Creating account...." , Toast.LENGTH_SHORT).show();
+
                 firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(!(task.isSuccessful())) {
-                            progressDialog.hide();
                             Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                         if(task.isSuccessful()) {
-                            Toast.makeText(RegisterActivity.this , "Successful" , Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this , "Successfully created" , Toast.LENGTH_SHORT).show();
                             addUser();
                             Intent intent = new Intent(context, DeviceListActivity.class);
                             startActivity(intent);
                         }
-
-
                     }
                 });
-
-
             }
         })
-
 
         ;}
 

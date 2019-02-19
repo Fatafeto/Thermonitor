@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-//manage keep me logged in
+
         button1 = (Button) findViewById(R.id.button1);
         button2 = (Button) findViewById(R.id.button2);
         inputMail = (EditText) findViewById(R.id.email);
@@ -58,8 +58,6 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, DeviceListActivity.class);
             startActivity(intent);
         }
-
-
     }
 
     public void addListenerOnButton() {
@@ -71,7 +69,6 @@ public class LoginActivity extends AppCompatActivity {
                 String email = inputMail.getText().toString();
                 final String password = inputPassword.getText().toString();
                 String username = inputUsername.getText().toString();
-
 
                 if(TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext() , "Please enter an e-mail" , Toast.LENGTH_SHORT).show();
@@ -109,12 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(context, DeviceListActivity.class);
                             startActivity(intent);
                             finish();
-
-
-
                         }
-
-
                     }
                 });
             }

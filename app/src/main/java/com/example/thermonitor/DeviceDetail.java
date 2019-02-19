@@ -22,6 +22,7 @@ public class DeviceDetail extends AppCompatActivity {
     Button button;
     TextView text;
     FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,19 +30,18 @@ public class DeviceDetail extends AppCompatActivity {
 
         button = (Button) findViewById(R.id.logout);
         text = (TextView) findViewById(R.id.textView);
-        text.setMovementMethod(new ScrollingMovementMethod());
+        text.setMovementMethod(new ScrollingMovementMethod());      //text view is scrollable
 
         firebaseAuth = FirebaseAuth.getInstance();
         addListenerOnButton();
     }
-//manage logout
     public void addListenerOnButton() {
         final Context context = this;
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 firebaseAuth.signOut();
-                finishAffinity();
+                finishAffinity();       //closes completely the app
 
             }
         });
