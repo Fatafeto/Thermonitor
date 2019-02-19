@@ -1,5 +1,6 @@
 package com.example.thermonitor;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -32,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText inputUsername;
     FirebaseAuth firebaseAuth;
     FirebaseDatabase firebaseDatabase;
+    ProgressDialog progressDialog;
 
     String username;
 
@@ -39,18 +41,23 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+//manage keep me logged in
         button1 = (Button) findViewById(R.id.button1);
         button2 = (Button) findViewById(R.id.button2);
         inputMail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         inputUsername = (EditText) findViewById(R.id.username);
+        progressDialog = new ProgressDialog(this);
         addListenerOnButton();
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if(user != null) {
+            Intent intent = new Intent(LoginActivity.this, DeviceListActivity.class);
+            startActivity(intent);
+        }
 
 
     }
@@ -63,6 +70,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = inputMail.getText().toString();
                 final String password = inputPassword.getText().toString();
+                String username = inputUsername.getText().toString();
+
 
                 if(TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext() , "Please enter an e-mail" , Toast.LENGTH_SHORT).show();
@@ -74,21 +83,30 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
+                if(TextUtils.isEmpty(username)) {
+                    Toast.makeText(getApplicationContext() , "Please enter a username" , Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if(password.length() < 8) {
                     Toast.makeText(getApplicationContext() , "Password is at least 8 characters" , Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                Toast.makeText(LoginActivity.this , "Signing in ..." , Toast.LENGTH_SHORT).show();
+                progressDialog.setMessage("Signing in ...");
+                progressDialog.show();
+
                 firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(!(task.isSuccessful()))
-                            Toast.makeText(LoginActivity.this , task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        if(!(task.isSuccessful())) {
+                            progressDialog.hide();
+                            Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
 
                         if(task.isSuccessful()) {
                             Toast.makeText(getApplicationContext() , "Successfully signed in" , Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(context, ListActivity.class);
+                            Intent intent = new Intent(context, DeviceListActivity.class);
                             startActivity(intent);
                             finish();
 

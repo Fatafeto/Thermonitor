@@ -1,9 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DeviceDetail">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="380dp"
+        android:layout_height="410dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:paddingStart="15dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="0.15in" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="450dp"
+        android:layout_marginRight="10dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/colorPrimary"
+        android:text="Logout"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+</RelativeLayout>

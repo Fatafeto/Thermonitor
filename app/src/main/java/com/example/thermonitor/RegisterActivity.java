@@ -1,5 +1,6 @@
 package com.example.thermonitor;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -29,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText inputPassword;
     EditText inputConfirmPassword;
     EditText inputUsername;
+    ProgressDialog progressDialog;
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -52,6 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = inputMail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
                 String confPassword = inputConfirmPassword.getText().toString().trim();
+                String username = inputUsername.getText().toString().trim();
 
 
                 if(TextUtils.isEmpty(email)) {
@@ -65,6 +68,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }
 
+                if(TextUtils.isEmpty(username)) {
+                    Toast.makeText(getApplicationContext() , "Please enter a username" , Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 if(password.length() < 8) {
                     Toast.makeText(getApplicationContext() , "Password length is at least 8 characters" , Toast.LENGTH_SHORT).show();
                     return;
@@ -76,17 +85,19 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
 
-                Toast.makeText(RegisterActivity.this , "Creating account ....." , Toast.LENGTH_SHORT).show();
-
+                progressDialog.setMessage("Creating account ...");
+                progressDialog.show();
                 firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(!(task.isSuccessful()))
-                            Toast.makeText(RegisterActivity.this , task.getException().getMessage() , Toast.LENGTH_SHORT).show();
+                        if(!(task.isSuccessful())) {
+                            progressDialog.hide();
+                            Toast.makeText(RegisterActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                         if(task.isSuccessful()) {
                             Toast.makeText(RegisterActivity.this , "Successful" , Toast.LENGTH_SHORT).show();
                             addUser();
-                            Intent intent = new Intent(context, ListActivity.class);
+                            Intent intent = new Intent(context, DeviceListActivity.class);
                             startActivity(intent);
                         }
 
