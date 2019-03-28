@@ -43,7 +43,6 @@ public class DeviceListActivity extends AppCompatActivity {
     Button button2;
     Button button3;
     ListView listView;
-    ProgressDialog progressDialog;
 
     WifiManager wifiManager;
     LocationManager locationManager;
@@ -53,6 +52,8 @@ public class DeviceListActivity extends AppCompatActivity {
     ArrayList<String> availableSSID = new ArrayList<String>();
     ArrayList<String> listElements = new ArrayList<String>();
     ArrayList<Integer> images = new ArrayList<Integer>();
+
+    public static String espName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +75,9 @@ public class DeviceListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                espName = listElements.get(position);
                 Intent myIntent = new Intent(view.getContext(),DeviceDetail.class);
                 startActivity(myIntent);
-
             }
 
         });
@@ -219,6 +220,8 @@ public class DeviceListActivity extends AppCompatActivity {
     }
 
    BroadcastReceiver wifiReceiver = new BroadcastReceiver() {  //listens for wifi scan results
+        //unregisterReceiver is used when we don't want to receive anymore broadcasts
+       //notifyDataSetChanged is used when we add or remove something from list in CustomAdapter
         @Override
         public void onReceive(Context context, Intent intent) {     //called when scanning finishes
             if (intent.getAction().equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)) {
